@@ -1,0 +1,8 @@
+https://www.w3.org/TR/webmidi/
+https://github.com/djipco/webmidi
+https://developer.mozilla.org/en-US/docs/Web/API/MIDIAccess
+
+https://dzone.com/articles/the-possibilities-of-web-midi-with-typescript
+https://webaudio.github.io/web-midi-api/#obtaining-access-to-midi-devices
+https://github.com/djipco/webmidi
+https://kulak.medium.com/introducing-midival-f837b2d48185
