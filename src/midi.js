@@ -1,6 +1,8 @@
 export default class Midi {
-	// var midi = null;  // global MIDIAccess object
-	
+	// var midi = null;  // global MIDIAccess object	
+	playback;
+	midiAccess;
+
 	constructor() {
 		console.log('Midi');
 		navigator.requestMIDIAccess({ sysex: true })
@@ -13,7 +15,13 @@ export default class Midi {
 			});			
 	}
 
+	setPlaybackInstance(playbackInstance) {
+		this.playback = playbackInstance;
+		console.log('midi playback instance', this.playback);
+	}
+
 	onMIDISuccess( midiAccess ) {
+		this.midiAccess = midiAccess;
 		console.log( "MIDI ready!" );
 		// midi = midiAccess;  // store in the global (in real usage, would probably keep in an object instance)
 		console.log(midiAccess);
@@ -39,8 +47,8 @@ export default class Midi {
 			console.log('input port: ', port);
 			console.log('input key: ', key);
 			
-			port.onmidimessage = this.onMIDIMessage;
-			port.onstatechange = this.onStateChange;
+			port.onmidimessage = (event) => { this.onMIDIMessage(event) };
+			port.onstatechange = (event) => { this.onStateChange(event); };
 		});
 
 		// or you could express in ECMAScript 6 as:
@@ -64,7 +72,7 @@ export default class Midi {
 			console.log('output key: ', key);
 			
 			// port.onmidimessage = this.onMIDIMessage;
-			port.onstatechange = this.onStateChange;					
+			port.onstatechange = (event) => { this.onStateChange(event) };
 			
 			console.log('port Id: ', port.id);
 			this.sendMiddleC(midiAccess, port.id);
@@ -102,6 +110,19 @@ export default class Midi {
 		}
 		console.log( str );
 		*/
+
+      // Mask off the lower nibble (MIDI channel, which we don't care about)
+      switch (event.data[0] & 0xf0) {
+        case 0x90:
+          if (event.data[2]!=0) {  // if velocity != 0, this is a note-on message
+            this.playback.noteOn(event.data[1]);
+            return;
+          }
+          // if velocity == 0, fall thru: it's a note-off.  MIDI's weird, y'all.
+        case 0x80:
+          this.playback.noteOff(event.data[1]);
+          return;
+      }		
 	}
 	
 	onStateChange(event) {
