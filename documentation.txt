@@ -20,9 +20,14 @@ https://tonejs.github.io/examples/sampler
 https://tonejs.github.io/docs/14.7.77/Sampler.html
 https://www.npmjs.com/package/tone
 https://github.com/Tonejs/Tone.js#readme
+https://github.com/Tonejs/Tone.js/blob/dev/examples/sampler.html
+https://github.com/sfzinstruments/SalamanderGrandPiano/tree/master/Data
+https://sfzformat.com/
+Kawai use a proprietary sound engine called "Harmonic Imaging XL" for CA99
 
 https://www.npmjs.com/package/soundfont-player
-
+https://github.com/gleitz/midi-js-soundfonts/tree/gh-pages/FluidR3_GM
+https://github.com/danigb/soundfont-player
 
 
 MusicXML:

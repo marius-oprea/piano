@@ -1,14 +1,17 @@
+import Sample from './sample.js'
+
 export default class Midi {
 	// var midi = null;  // global MIDIAccess object	
 	playback;
 	midiAccess;
+	sample;
 
 	constructor() {
 		console.log('Midi');
+		this.sample = new Sample();
 		navigator.requestMIDIAccess({ sysex: true })
 			.then( (access) => {
-				this.onMIDISuccess(access);
-				
+				this.onMIDISuccess(access);				
 			})
 			.catch(error => {
 				this.onMIDIFailure(error);
@@ -48,7 +51,7 @@ export default class Midi {
 			console.log('input key: ', key);
 			
 			port.onmidimessage = (event) => { this.onMIDIMessage(event) };
-			port.onstatechange = (event) => { this.onStateChange(event); };
+			port.onstatechange = (event) => { this.onStateChange(event) };
 		});
 
 		// or you could express in ECMAScript 6 as:
@@ -115,12 +118,14 @@ export default class Midi {
       switch (event.data[0] & 0xf0) {
         case 0x90:
           if (event.data[2]!=0) {  // if velocity != 0, this is a note-on message
-            this.playback.noteOn(event.data[1]);
+            // this.playback.noteOn(event.data[1]);
+						this.sample.playNote(event.data[1])
             return;
           }
           // if velocity == 0, fall thru: it's a note-off.  MIDI's weird, y'all.
         case 0x80:
-          this.playback.noteOff(event.data[1]);
+          // this.playback.noteOff(event.data[1]);
+					this.sample.releaseNote(event.data[1])
           return;
       }		
 	}

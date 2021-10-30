@@ -54,7 +54,7 @@ OCTAVE   KEY CODE
   D4#/E4b   63
   E4        64
   F4        65
-  F43/G4b   66
+  F4#/G4b   66
   G4        67
   G4#/A4b   68
   A4        69
