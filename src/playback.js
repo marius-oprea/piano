@@ -19,17 +19,7 @@ export default class Playback {
     this.release = 0.05;
     this.portamento = 0.05;
     this.activeNotes = [];
-/*
-    // set up the basic oscillator chain, muted to begin with.
-    this.oscillator = this.audioContext.createOscillator();
-    this.oscillator.type = 'square';
-    this.oscillator.frequency.setValueAtTime(110, 0);
-    this.envelope = this.audioContext.createGain();
-    this.oscillator.connect(this.envelope);
-    this.envelope.connect(this.audioContext.destination);
-    this.envelope.gain.value = 0.0;  // Mute the sound
-    this.oscillator.start(0);  // Go ahead and start up the oscillator  
-*/  
+
     this.playNote(60, 1, 1);
   }
 

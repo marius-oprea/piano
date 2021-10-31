@@ -1,13 +1,128 @@
 <html>
-	WebMidi
-	<div>
-		UPLOAD <input type="file" id="fileUpload">
-	</div>
-	<div>
-		DOWNLOAD <button id="fileDownload">DOWNLOAD</button>
-	</div>
-	<div>
-		<button id="playId">PLAY</button>
-	</div>
-	<script type="module" src="app.js"></script>
+	<head>
+		<link href="index.css" rel="stylesheet">
+	</head>
+	<body>
+		<div class="container">
+			WebMidi
+			<div>
+				UPLOAD <input type="file" id="fileUpload">
+			</div>
+			<div>
+				DOWNLOAD <button id="fileDownload">DOWNLOAD</button>
+			</div>
+			<div>
+				<button id="playId">PLAY</button>
+			</div>
+			<div class="piano">
+					<!-- OCTAVE 0 -->
+					<div note="A0" class="white-key"></div>
+					<div note="A0#" class="black-key"></div>
+					<div note="B0" class="white-key offset-key"></div>
+
+					<!-- OCTAVE 1 -->
+					<div note="C1" class="white-2-white-key"></div>
+					<div note="C1#" class="black-key"></div>
+					<div note="D1" class="white-key offset-key"></div>
+					<div note="D1#" class="black-key"></div>
+					<div note="E1" class="white-key offset-key"></div>
+					<div note="F1" class="white-2-white-key"></div>
+					<div note="F1#" class="black-key"></div>
+					<div note="G1" class="white-key offset-key"></div>
+					<div note="G1#" class="black-key"></div>
+					<div note="A1" class="white-key offset-key"></div>
+					<div note="A1#" class="black-key"></div>
+					<div note="B1" class="white-key offset-key"></div>
+
+					<!-- OCTAVE 2 -->
+					<div note="C2" class="white-2-white-key"></div>
+					<div note="C2#" class="black-key"></div>
+					<div note="D2" class="white-key offset-key"></div>
+					<div note="D2#" class="black-key"></div>
+					<div note="E2" class="white-key offset-key"></div>
+					<div note="F2" class="white-2-white-key"></div>
+					<div note="F2#" class="black-key"></div>
+					<div note="G2" class="white-key offset-key"></div>
+					<div note="G2#" class="black-key"></div>
+					<div note="A2" class="white-key offset-key"></div>
+					<div note="A2#" class="black-key"></div>
+					<div note="B2" class="white-key offset-key"></div>
+
+					<!-- OCTAVE 3 -->
+					<div note="C3" class="white-2-white-key"></div>
+					<div note="C3#" class="black-key"></div>
+					<div note="D3" class="white-key offset-key"></div>
+					<div note="D3#" class="black-key"></div>
+					<div note="E3" class="white-key offset-key"></div>
+					<div note="F3" class="white-2-white-key"></div>
+					<div note="F3#" class="black-key"></div>
+					<div note="G3" class="white-key offset-key"></div>
+					<div note="G3#" class="black-key"></div>
+					<div note="A3" class="white-key offset-key"></div>
+					<div note="A3#" class="black-key"></div>
+					<div note="B3" class="white-key offset-key"></div>
+
+					<!-- OCTAVE 4 -->
+					<div note="C4" class="white-2-white-key"></div>
+					<div note="C4#" class="black-key"></div>
+					<div note="D4" class="white-key offset-key"></div>
+					<div note="D4#" class="black-key"></div>
+					<div note="E4" class="white-key offset-key"></div>
+					<div note="F4" class="white-2-white-key"></div>
+					<div note="F4#" class="black-key"></div>
+					<div note="G4" class="white-key offset-key"></div>
+					<div note="G4#" class="black-key"></div>
+					<div note="A4" class="white-key offset-key"></div>
+					<div note="A4#" class="black-key"></div>
+					<div note="B4" class="white-key offset-key"></div>
+
+					<!-- OCTAVE 5 -->
+					<div note="C5" class="white-2-white-key"></div>
+					<div note="C5#" class="black-key"></div>
+					<div note="D5" class="white-key offset-key"></div>
+					<div note="D5#" class="black-key"></div>
+					<div note="E5" class="white-key offset-key"></div>
+					<div note="F5" class="white-2-white-key"></div>
+					<div note="F5#" class="black-key"></div>
+					<div note="G5" class="white-key offset-key"></div>
+					<div note="G5#" class="black-key"></div>
+					<div note="A5" class="white-key offset-key"></div>
+					<div note="A5#" class="black-key"></div>
+					<div note="B5" class="white-key offset-key"></div>
+
+					<!-- OCTAVE 6 -->
+					<div note="C6" class="white-2-white-key"></div>
+					<div note="C6#" class="black-key"></div>
+					<div note="D6" class="white-key offset-key"></div>
+					<div note="D6#" class="black-key"></div>
+					<div note="E6" class="white-key offset-key"></div>
+					<div note="F6" class="white-2-white-key"></div>
+					<div note="F6#" class="black-key"></div>
+					<div note="G6" class="white-key offset-key"></div>
+					<div note="G6#" class="black-key"></div>
+					<div note="A6" class="white-key offset-key"></div>
+					<div note="A6#" class="black-key"></div>
+					<div note="B6" class="white-key offset-key"></div>
+
+					<!-- OCTAVE 7 -->
+					<div note="C7" class="white-2-white-key"></div>
+					<div note="C7#" class="black-key"></div>
+					<div note="D7" class="white-key offset-key"></div>
+					<div note="D7#" class="black-key"></div>
+					<div note="E7" class="white-key offset-key"></div>
+					<div note="F7" class="white-2-white-key"></div>
+					<div note="F7#" class="black-key"></div>
+					<div note="G7" class="white-key offset-key"></div>
+					<div note="G7#" class="black-key"></div>
+					<div note="A7" class="white-key offset-key"></div>
+					<div note="A7#" class="black-key"></div>
+					<div note="B7" class="white-key offset-key"></div>
+
+					<!-- OCTAVE 8 -->
+					<div note="C8" class="white-2-white-key"></div>
+					
+			</div>
+		</div>
+		<script type="module" src="app.js"></script>
+	</body>
 </html>
