@@ -9,7 +9,6 @@ export default class Playback {
   pressedNotes;
 
   constructor() {
-    console.log('Playback');
     this.pressedNotes = new Map();
   }
 
@@ -20,7 +19,7 @@ export default class Playback {
     this.portamento = 0.05;
     this.activeNotes = [];
 
-    this.playNote(60, 1, 1);
+    this.playKey(60);
   }
 
 	playNote(frequency, volume, duration) {
@@ -45,8 +44,7 @@ export default class Playback {
 
   // https://en.wikipedia.org/wiki/Piano_key_frequencies
   frequencyFromNoteNumber( note ) {
-    return 440 * Math.pow(2,(note-69)/12);
-    // return 440 * Math.pow(2, (note - 20 - 49) / 12);
+    return 440 * Math.pow(2, (note - 69) / 12);
   }
 
   playKeyOldVersion(note) { 
@@ -116,9 +114,7 @@ export default class Playback {
 
   noteOn(noteNumber) {
     this.activeNotes.push( noteNumber );
-    this.oscillator.frequency.cancelScheduledValues(0);
-    console.log(`note: ${noteNumber} - frequency: ${this.frequencyFromNoteNumber(noteNumber)} `);
-    
+    this.oscillator.frequency.cancelScheduledValues(0);    
     this.oscillator.type = 'square';
 
     this.oscillator.frequency.setTargetAtTime( this.frequencyFromNoteNumber(noteNumber), 0, this.portamento );

@@ -6,9 +6,9 @@ import Keyboard from './src/keyboard.js';
 
 class App {
   midi;
+  isMidiPlayback;
 
   constructor() {
-    console.log('App');
     const svg = new SVG();
     const file = new File();
     this.midi = new Midi();
@@ -19,10 +19,6 @@ class App {
     this.listenForEvents('playId');
   }
 
-  onClick(event) {
-    console.log('click', event);
-  }
-
   listenForEvents(playButtonId) {
     const playButton = document.getElementById(playButtonId);
     let clickedKey;
@@ -30,30 +26,36 @@ class App {
     playButton.onclick = () => {
       const playback = new Playback();
       playback.initSynthesizer();
-
-      console.log('playback instance', playback);
       this.midi.setPlaybackInstance(playback);
-
-
       const keyboard = new Keyboard();
       const keys = keyboard.keys;
   
       for (const [key, { element }] of Object.entries(keyboard.getKeys())) {
-        console.log(`key ${key} element ${element}`);
         if (element !== undefined) {
-          console.log('', element);
           element.addEventListener("mousedown", () => {
-            playback.playKey(key);
+            if (this.isMidiPlayback) {
+              this.midi.sendNote(this.midi.midiAccess, this.midi.outputPortId, key);
+            } else {
+              playback.playKey(key);
+            }
             keys[key].element.classList.add("pressed");
             clickedKey = key;
           });
         }
       }
       
-      document.addEventListener("mouseup", () => {
-        playback.stopKey(clickedKey);
+      document.getElementById('keyboard').addEventListener("mouseup", () => {
+        if (this.isMidiPlayback) {
+        } else {
+          playback.stopKey(clickedKey);
+        }
         keys[clickedKey].element.classList.remove("pressed");
-      });      
+      });
+
+      document.getElementById('isMidiId').addEventListener('change', (event) => {
+        console.log(event.target.checked);
+        this.isMidiPlayback = event.target.checked;
+      });
     };    
   }  
 }

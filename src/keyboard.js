@@ -2,7 +2,6 @@ export default class Keyboard {
   keys;
 
   constructor() {
-    console.log('Keyboard');
     this.initKeyboard();
   }
 
