@@ -34,6 +34,8 @@ https://github.com/danigb/soundfont-player
 https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API/Simple_synth
 https://yari-demos.prod.mdn.mozit.cloud/en-US/docs/Web/API/Web_Audio_API/Simple_synth/_sample_.The_video_keyboard.html
 
+https://css-tricks.com/how-to-code-a-playable-synth-keyboard/
+
 
 MusicXML:
 ==========
