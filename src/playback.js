@@ -1,34 +1,35 @@
 export default class Playback {
-  audio;
-  context;
+  audioContext;
   oscillator;  // the single oscillator
   envelope;    // the envelope for the single oscillator
   attack;      // attack speed
   release;   // release speed
   portamento;  // portamento/glide speed
   activeNotes; // the stack of actively-pressed keys  
+  pressedNotes;
 
   constructor() {
     console.log('Playback');
+    this.pressedNotes = new Map();
   }
 
   initSynthesizer() {
-    this.audio = new (window.AudioContext || window.webkitAudioContext)();
-    this.context = new AudioContext();
+    this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
     this.attack = 0.05;
     this.release = 0.05;
     this.portamento = 0.05;
     this.activeNotes = [];
-
+/*
     // set up the basic oscillator chain, muted to begin with.
-    this.oscillator = this.context.createOscillator();
+    this.oscillator = this.audioContext.createOscillator();
+    this.oscillator.type = 'square';
     this.oscillator.frequency.setValueAtTime(110, 0);
-    this.envelope = this.context.createGain();
+    this.envelope = this.audioContext.createGain();
     this.oscillator.connect(this.envelope);
-    this.envelope.connect(this.context.destination);
+    this.envelope.connect(this.audioContext.destination);
     this.envelope.gain.value = 0.0;  // Mute the sound
     this.oscillator.start(0);  // Go ahead and start up the oscillator  
-    
+*/  
     this.playNote(60, 1, 1);
   }
 
@@ -41,24 +42,96 @@ export default class Playback {
       duration = halfPeriod;
     }
 
-    var g = this.audio.createGain();
-    var o = this.audio.createOscillator();
+    var g = this.audioContext.createGain();
+    var o = this.audioContext.createOscillator();
     o.connect(g);
-    g.connect(this.audio.destination); // so you actually hear the output
+    g.connect(this.audioContext.destination); // so you actually hear the output
 
     o.frequency.value = frequency;
     g.gain.value = volume;
     o.start(0);
-    o.stop(this.audio.currentTime + duration);
+    o.stop(this.audioContext.currentTime + duration);
 	}
 
+  // https://en.wikipedia.org/wiki/Piano_key_frequencies
   frequencyFromNoteNumber( note ) {
     return 440 * Math.pow(2,(note-69)/12);
+    // return 440 * Math.pow(2, (note - 20 - 49) / 12);
+  }
+
+  playKeyOldVersion(note) { 
+    const osc = this.audioContext.createOscillator();
+    const noteGainNode = this.audioContext.createGain();
+    noteGainNode.connect(this.audioContext.destination);
+    noteGainNode.gain.value = 0.5;
+    osc.connect(noteGainNode);
+    osc.type = "triangle";
+  
+    osc.frequency.value = this.frequencyFromNoteNumber(note);
+  
+    this.pressedNotes.set(note, osc);
+    this.pressedNotes.get(note).start();
+  }
+
+  playKey(note) {
+    const osc = this.audioContext.createOscillator();
+    const noteGainNode = this.audioContext.createGain();
+    noteGainNode.connect(this.audioContext.destination);
+  
+    const zeroGain = 0.00001;
+    const maxGain = 0.5;
+    const sustainedGain = 0.001;
+  
+    noteGainNode.gain.value = zeroGain;
+  
+    const setAttack = () =>
+      noteGainNode.gain.exponentialRampToValueAtTime(
+        maxGain,
+        this.audioContext.currentTime + 0.01
+      );
+    const setDecay = () =>
+      noteGainNode.gain.exponentialRampToValueAtTime(
+        sustainedGain,
+        this.audioContext.currentTime + 1
+      );
+    const setRelease = () =>
+      noteGainNode.gain.exponentialRampToValueAtTime(
+        zeroGain,
+        this.audioContext.currentTime + 2
+      );
+  
+    setAttack();
+    setDecay();
+    setRelease();
+  
+    osc.connect(noteGainNode);
+    osc.type = "triangle";
+  
+    osc.frequency.value = this.frequencyFromNoteNumber(note);
+    
+    this.pressedNotes.set(note, osc);
+    this.pressedNotes.get(note).start();
+  }
+
+  stopKey(note) {  
+    const osc = this.pressedNotes.get(note);
+    
+    if (osc) {
+      //setTimeout(() => {
+        osc.stop();
+      //}, 2000);
+  
+      this.pressedNotes.delete(note);
+    }
   }
 
   noteOn(noteNumber) {
     this.activeNotes.push( noteNumber );
     this.oscillator.frequency.cancelScheduledValues(0);
+    console.log(`note: ${noteNumber} - frequency: ${this.frequencyFromNoteNumber(noteNumber)} `);
+    
+    this.oscillator.type = 'square';
+
     this.oscillator.frequency.setTargetAtTime( this.frequencyFromNoteNumber(noteNumber), 0, this.portamento );
     this.envelope.gain.cancelScheduledValues(0);
     this.envelope.gain.setTargetAtTime(1.0, 0, this.attack);
@@ -76,5 +149,5 @@ export default class Playback {
       this.oscillator.frequency.cancelScheduledValues(0);
       this.oscillator.frequency.setTargetAtTime( this.frequencyFromNoteNumber(this.activeNotes[this.activeNotes.length-1]), 0, this.portamento );
     }
-  }  
+  }
 }

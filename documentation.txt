@@ -24,10 +24,15 @@ https://github.com/Tonejs/Tone.js/blob/dev/examples/sampler.html
 https://github.com/sfzinstruments/SalamanderGrandPiano/tree/master/Data
 https://sfzformat.com/
 Kawai use a proprietary sound engine called "Harmonic Imaging XL" for CA99
+SF2 better than
+https://github.com/surikov/webaudiofont
 
 https://www.npmjs.com/package/soundfont-player
 https://github.com/gleitz/midi-js-soundfonts/tree/gh-pages/FluidR3_GM
 https://github.com/danigb/soundfont-player
+
+https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API/Simple_synth
+https://yari-demos.prod.mdn.mozit.cloud/en-US/docs/Web/API/Web_Audio_API/Simple_synth/_sample_.The_video_keyboard.html
 
 
 MusicXML:

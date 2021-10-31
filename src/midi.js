@@ -116,16 +116,20 @@ export default class Midi {
 
       // Mask off the lower nibble (MIDI channel, which we don't care about)
       switch (event.data[0] & 0xf0) {
+				// NOTE ON
         case 0x90:
           if (event.data[2]!=0) {  // if velocity != 0, this is a note-on message
             // this.playback.noteOn(event.data[1]);
-						this.sample.playNote(event.data[1])
+						this.playback.playKey(event.data[1]);
+						// this.sample.playNote(event.data[1])
             return;
           }
           // if velocity == 0, fall thru: it's a note-off.  MIDI's weird, y'all.
+				// NOTE OFF
         case 0x80:
           // this.playback.noteOff(event.data[1]);
-					this.sample.releaseNote(event.data[1])
+					this.playback.stopKey(event.data[1]);
+					// this.sample.releaseNote(event.data[1])
           return;
       }		
 	}
@@ -142,6 +146,9 @@ export default class Midi {
 	sendMiddleC( midiAccess, portID ) {
 		console.log('portId', portID);
 		
+		// NOTE ON  = 0x90
+		// NOTE OFF = 0x80
+
 		var noteOnMessage = [0x90, 60, 0x7f];    // note on, middle C, full velocity
 		var output = midiAccess.outputs.get(portID);
 		output.send( noteOnMessage );  //omitting the timestamp means send immediately.
