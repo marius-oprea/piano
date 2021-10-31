@@ -55,7 +55,8 @@ export default class Playback {
     noteGainNode.connect(this.audioContext.destination);
     noteGainNode.gain.value = 0.5;
     osc.connect(noteGainNode);
-    osc.type = "triangle";
+    // osc.type = "triangle";
+    osc.type = "square";
   
     osc.frequency.value = this.frequencyFromNoteNumber(note);
   
@@ -69,8 +70,8 @@ export default class Playback {
     noteGainNode.connect(this.audioContext.destination);
   
     const zeroGain = 0.00001;
-    const maxGain = 0.5;
-    const sustainedGain = 0.001;
+    const maxGain = 1;// 0.5;
+    const sustainedGain = 0.01// 0.001;
   
     noteGainNode.gain.value = zeroGain;
   
@@ -95,7 +96,8 @@ export default class Playback {
     setRelease();
   
     osc.connect(noteGainNode);
-    osc.type = "triangle";
+    // osc.type = "triangle";
+    osc.type = "square";
   
     osc.frequency.value = this.frequencyFromNoteNumber(note);
     
@@ -107,10 +109,7 @@ export default class Playback {
     const osc = this.pressedNotes.get(note);
     
     if (osc) {
-      //setTimeout(() => {
-        osc.stop();
-      //}, 2000);
-  
+      osc.stop();  
       this.pressedNotes.delete(note);
     }
   }
