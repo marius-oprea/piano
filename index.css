@@ -9,6 +9,19 @@ body {
 
 .container {
   display: grid;
+  grid-template-rows: 1.5rem auto 7rem 12.5rem;
+  border: 1px solid green;
+  height: 100%;
+}
+
+.xml {
+  border: 1px solid cyan;
+}
+
+#osmdCanvas {
+  overflow: auto;
+  max-height: auto;
+  border: 1px solid yellowgreen;  
 }
 
 :root {

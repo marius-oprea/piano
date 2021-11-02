@@ -3,27 +3,27 @@
 		<link href="index.css" rel="stylesheet">
 	</head>
 	<body>
-		<script src="src/opensheetmusicdisplay.min.js"></script>
-		<div id="osmdCanvas"/>
-
-		<input type="file" id="files"/>
-		<output id="list"></output>
-		
-		<script src="src/fileSelectAndLoadOSMD.js"></script>		
 		<div class="container">
-			WebMidi
+			<div class="xml">
+				Load musicXML file format <input type="file" id="files"/>
+				<output id="list"></output>
+			</div>	
+			<div id="osmdCanvas"></div>
 			<div>
-				UPLOAD <input type="file" id="fileUpload">
+				WebMidi
+				<div>
+					UPLOAD <input type="file" id="fileUpload">
+				</div>
+				<div>
+					DOWNLOAD <button id="fileDownload">DOWNLOAD</button>
+				</div>
+				<div>
+					<button id="playId">PLAY</button>
+				</div>
+				<label>
+					<input type="checkbox" value="isMidi" id="isMidiId"> Play your MIDI Keyboard sound
+				</label>
 			</div>
-			<div>
-				DOWNLOAD <button id="fileDownload">DOWNLOAD</button>
-			</div>
-			<div>
-				<button id="playId">PLAY</button>
-			</div>
-			<label>
-				<input type="checkbox" value="isMidi" id="isMidiId"> Play your MIDI Keyboard sound
-			</label>
 			<div class="keyboard" id="keyboard">
 					<!-- OCTAVE 0 -->
 					<div note="A0" class="white-key"></div>
@@ -133,6 +133,8 @@
 					
 			</div>
 		</div>
+		<script src="src/opensheetmusicdisplay.min.js"></script>
+		<script src="src/fileSelectAndLoadOSMD.js"></script>		
 		<script type="module" src="app.js"></script>
 	</body>
 </html>
