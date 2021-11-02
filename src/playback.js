@@ -7,6 +7,7 @@ export default class Playback {
   portamento;  // portamento/glide speed
   activeNotes; // the stack of actively-pressed keys  
   pressedNotes;
+  keyboard;
 
   constructor() {
     this.pressedNotes = new Map();
@@ -101,6 +102,8 @@ export default class Playback {
     
     this.pressedNotes.set(note, osc);
     this.pressedNotes.get(note).start();
+
+    this.keyboard.keys[note].element.classList.add("pressed");
   }
 
   stopKey(note) {  
@@ -109,6 +112,7 @@ export default class Playback {
     if (osc) {
       osc.stop();  
       this.pressedNotes.delete(note);
+      this.keyboard.keys[note].element.classList.remove("pressed");
     }
   }
 

@@ -1,4 +1,5 @@
 RUNs @ http://localhost:81/ via IIS
+https://marius-oprea.github.io/piano/
 
 
 MIDI:
@@ -64,3 +65,7 @@ COMPLETE SOLUTIONS:
 ===================
 https://github.com/opensheetmusicdisplay/opensheetmusicdisplay
 https://opensheetmusicdisplay.org/music-xml-audio-player/
+https://github.com/opensheetmusicdisplay/RawJavascript-usage-example/blob/master/fileSelectAndLoadOSMD.js
+
+https://github.com/leafo/sightreading.training
+https://sightreading.training/guide/lml

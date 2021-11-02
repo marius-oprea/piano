@@ -24,11 +24,12 @@ class App {
     let clickedKey;
 
     playButton.onclick = () => {
-      const playback = new Playback();
-      playback.initSynthesizer();
-      this.midi.setPlaybackInstance(playback);
       const keyboard = new Keyboard();
       const keys = keyboard.keys;
+      const playback = new Playback();
+      playback.keyboard = keyboard;
+      playback.initSynthesizer();
+      this.midi.setPlaybackInstance(playback);
   
       for (const [key, { element }] of Object.entries(keyboard.getKeys())) {
         if (element !== undefined) {
