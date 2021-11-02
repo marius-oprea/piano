@@ -2,6 +2,11 @@ RUNs @ http://localhost:81/ via IIS
 https://marius-oprea.github.io/piano/
 
 
+BPM calculator
+==============
+https://toolstud.io/music/bpm.php?bpm=120&bpm_unit=4%2F4
+
+
 MIDI:
 =====
 https://www.midi.org/articles/about-web-midi
@@ -16,6 +21,7 @@ https://webaudio.github.io/web-audio-api/#the-oscillatornode-interface
 
 Synthesizer
 =============
+https://en.wikipedia.org/wiki/Piano_key_frequencies
 https://tonejs.github.io/
 https://tonejs.github.io/examples/sampler
 https://tonejs.github.io/docs/14.7.77/Sampler.html
@@ -43,6 +49,7 @@ MusicXML:
 https://www.musicxml.com/for-developers/
 https://github.com/w3c/musicxml
 https://www.w3.org/community/music-notation/
+https://www.w3.org/2021/06/musicxml40/
 https://www.w3.org/2021/06/musicxml40/tutorial/introduction/
 
 

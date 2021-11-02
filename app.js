@@ -3,15 +3,18 @@ import SVG from './src/svg.js';
 import File from './src/file.js'
 import Playback from './src/playback.js';
 import Keyboard from './src/keyboard.js';
+import OSMDHandler from './src/osmd-handler.js';
 
 class App {
   midi;
+  osmdHandler;
   isMidiPlayback;
 
   constructor() {
     const svg = new SVG();
     const file = new File();
     this.midi = new Midi();
+    this.osmdHandler = new OSMDHandler();
 
     file.uploadFile('fileUpload');
     file.downloadFile('fileDownload');
@@ -30,6 +33,7 @@ class App {
       playback.keyboard = keyboard;
       playback.initSynthesizer();
       this.midi.setPlaybackInstance(playback);
+      this.osmdHandler.playback = playback;
   
       for (const [key, { element }] of Object.entries(keyboard.getKeys())) {
         if (element !== undefined) {
@@ -56,6 +60,9 @@ class App {
       document.getElementById('isMidiId').addEventListener('change', (event) => {
         console.log(event.target.checked);
         this.isMidiPlayback = event.target.checked;
+        if (this.midi) {
+          this.midi.isPlaybackSound = this.isMidiPlayback;
+        }
       });
     };    
   }  

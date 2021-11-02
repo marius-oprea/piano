@@ -5,8 +5,10 @@ export default class Midi {
 	midiAccess;
 	sample;
 	outputPortId;
+	isPlaybackSound;
 
 	constructor() {
+		this.isPlaybackSound = false;
 		this.sample = new Sample();
 		navigator.requestMIDIAccess({ sysex: true })
 			.then( (access) => {
@@ -58,7 +60,9 @@ export default class Midi {
 			case 0x90:
 				if (event.data[2]!=0) {  // if velocity != 0, this is a note-on message
 					// this.playback.noteOn(event.data[1]);
-					this.playback.playKey(event.data[1]);
+					if (this.playback !== undefined && this.isPlaybackSound) {
+						this.playback.playKey(event.data[1]);
+					}
 					// this.sample.playNote(event.data[1])
 					return;
 				}
@@ -66,7 +70,9 @@ export default class Midi {
 			// NOTE OFF
 			case 0x80:
 				// this.playback.noteOff(event.data[1]);
-				this.playback.stopKey(event.data[1]);
+				if (this.playback !== undefined && this.isPlaybackSound) {
+					this.playback.stopKey(event.data[1]);
+				}
 				// this.sample.releaseNote(event.data[1])
 				return;
 		}		

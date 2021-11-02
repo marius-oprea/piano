@@ -21,6 +21,7 @@ export default class Playback {
     this.activeNotes = [];
 
     this.playKey(60);
+    setTimeout(() => {this.stopKey(60)}, 1 * 1000);
   }
 
 	playNote(frequency, volume, duration) {
