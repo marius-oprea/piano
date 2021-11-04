@@ -31,13 +31,18 @@ export default class OSMDHandler {
       this.isTutorRunning = true;
 
       document.addEventListener('noteOn', (event) => {
-        console.log([ ...this.playback.pressedNotes.keys() ] );
-
-        let difference = this.currentCursorNotes.filter(x => ![ ...this.playback.pressedNotes.keys() ].includes(x));
+        const pressedNotes = [ ...this.playback.pressedNotes.keys() ]
+        console.log('pressedNotes', pressedNotes);
+        let difference = this.currentCursorNotes.filter(x => !pressedNotes.includes(x));
         if (difference.length === 0) {
           const cursor = this.osmd.cursor;
-          cursor.next();
-          this.currentCursorNotes = this.getVoices(cursor).map(item => item.note);
+          do {
+            cursor.next();
+            this.currentCursorNotes = this.getVoices(cursor).map(item => item.note);
+          }
+          while(this.currentCursorNotes.length === 0);
+          console.log('------------------------------------------');
+          console.log('cursor notes: ', this.currentCursorNotes);
         }
       });
       document.addEventListener('noteOff', (event) => {
@@ -197,6 +202,10 @@ export default class OSMDHandler {
     let voicesNotes;
     voicesNotes = [];
     const voices = this.osmd.cursor.iterator.CurrentVoiceEntries;
+    if (voices === undefined) {
+      return;
+    }
+
     for (var i = 0; i < voices.length; i++) {
       const v = voices[i];
       const notes = v.notes;
@@ -212,13 +221,6 @@ export default class OSMDHandler {
               "startTime": currentTime,
               "duration": note.length.realValue
             })
-            /*
-            this.allNotes.push({
-              "note": currentNote,
-              "startTime": currentTime,
-              "duration": note.length.realValue
-            })
-            */
         }
       }
     }
