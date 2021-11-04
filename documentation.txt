@@ -71,6 +71,11 @@ https://github.com/0xfe/vexflow/tree/master/src
 COMPLETE SOLUTIONS:
 ===================
 https://github.com/opensheetmusicdisplay/opensheetmusicdisplay
+
+https://github.com/baisheng/osmd-player/tree/main/apps/the-score/src
+https://github.com/baisheng/the-score-player
+https://github.com/jimutt/osmd-audio-player
+
 https://opensheetmusicdisplay.org/music-xml-audio-player/
 https://github.com/opensheetmusicdisplay/RawJavascript-usage-example/blob/master/fileSelectAndLoadOSMD.js
 

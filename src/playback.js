@@ -20,8 +20,10 @@ export default class Playback {
     this.portamento = 0.05;
     this.activeNotes = [];
 
+    /*
     this.playKey(60);
     setTimeout(() => {this.stopKey(60)}, 1 * 1000);
+    */
   }
 
 	playNote(frequency, volume, duration) {
@@ -105,6 +107,10 @@ export default class Playback {
     this.pressedNotes.get(note).start();
 
     this.keyboard.keys[note].element.classList.add("pressed");
+
+    const noteOnEvent = new CustomEvent('noteOn', {note: note});
+    document.dispatchEvent(noteOnEvent);
+
   }
 
   stopKey(note) {  
@@ -114,6 +120,9 @@ export default class Playback {
       osc.stop();  
       this.pressedNotes.delete(note);
       this.keyboard.keys[note].element.classList.remove("pressed");
+
+      const noteOffEvent = new CustomEvent('noteOff', {note: note});
+      document.dispatchEvent(noteOffEvent);        
     }
   }
 

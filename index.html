@@ -4,24 +4,33 @@
 	</head>
 	<body>
 		<div class="container">
-			<div>
+			<div class="sheet-player">
 				Load musicXML file format <input type="file" id="files"/>
+				<button id="playSheetId">PLAY</button>
+				<button id="pauseSheetId">PAUSE</button>
+				<button id="stopSheetId">STOP</button>
+				<span class="spacer"></span>
+				<button id="startTutorId"> START TUTOR</button>
+				<button id="stopTutorId"> STOP TUTOR</button>
 				<output id="list"></output>
 			</div>	
 			<div id="osmdCanvas"></div>
 			<div>
-				WebMidi
+				<!--
 				<div>
 					UPLOAD <input type="file" id="fileUpload">
 				</div>
 				<div>
 					DOWNLOAD <button id="fileDownload">DOWNLOAD</button>
 				</div>
+				-->
 				<div>
-					<button id="playId">PLAY</button>
+					<button visibility="false" id="connectId">Connect with MIDI Keyboard</button>
 				</div>
 				<label>
-					<input type="checkbox" value="isMidi" id="isMidiId"> Play your MIDI Keyboard sound
+					<input type="checkbox" value="isMidi" id="isMidiId"> Play your MIDI Keyboard sound - 
+					<span>When checked, if you use the mouse to press the virtual keyboard, the sound will play into your real keyboard speakers</span>
+					<span>When checked, if you play your real keyboard, the virtual keyboard will show the pressed keys and sound</span>
 				</label>
 			</div>
 			<div class="keyboard" id="keyboard">

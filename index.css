@@ -7,10 +7,18 @@ body {
   padding: 0;
 }
 
+.sheet-player {
+  border: 1px solid red;
+}
+
 .container {
   display: grid;
-  grid-template-rows: 1.5rem auto 7rem 12.5rem;
+  grid-template-rows: 3.5rem auto 3rem 12.5rem;
   height: calc(100% - 2px);
+}
+
+.spacer {
+  margin: 20px;
 }
 
 #osmdCanvas {

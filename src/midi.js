@@ -6,17 +6,23 @@ export default class Midi {
 	sample;
 	outputPortId;
 	isPlaybackSound;
+	noteOnEvent;
+	noteOffEvent;
 
 	constructor() {
 		this.isPlaybackSound = false;
 		this.sample = new Sample();
+		this.connectToMIDI();
+	}
+
+	connectToMIDI() {
 		navigator.requestMIDIAccess({ sysex: true })
 			.then( (access) => {
 				this.onMIDISuccess(access);				
 			})
 			.catch(error => {
 				this.onMIDIFailure(error);
-			});			
+			});
 	}
 
 	setPlaybackInstance(playbackInstance) {
@@ -44,7 +50,7 @@ export default class Midi {
 		
 		outputs.forEach( ( port, key ) => {
 			port.onstatechange = (event) => { this.onStateChange(event) };
-			this.sendNote(midiAccess, port.id, 60);
+			// this.sendNote(midiAccess, port.id, 60);
 			this.outputPortId = port.id;
 		});		
 	}

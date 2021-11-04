@@ -5,9 +5,82 @@ export default class OSMDHandler {
   canPlayVoice;
   allNotes;
 
+  playButtonId;
+  stopButtonId;
+  pauseButtonId;
+  isTutorRunning;
+  currentCursorNotes;
+
   constructor() {
+    this.isTutorRunning = false;
+    document.getElementById('startTutorId').addEventListener('click', () => {this.startTutor()});
+    document.getElementById('stopTutorId').addEventListener('click', () => {this.stopTutor()});
+    document.getElementById('playSheetId').addEventListener('click', (event) => {this.playScore(event)}, false);
+    document.getElementById('stopSheetId').addEventListener('click', (event) => {this.stopScore()});
+    document.getElementById('pauseSheetId').addEventListener('click', (event) => {this.pauseScore()});
     document.getElementById("files").addEventListener("change", (event) => {this.handleFileSelect(event)}, false);
     this.allNotes = [];
+  }
+
+  stopTutor() {
+    this.isTutorRunning = false;
+  }
+
+  startTutor() {
+    if (this.osmd) {
+      this.isTutorRunning = true;
+
+      document.addEventListener('noteOn', (event) => {
+        console.log([ ...this.playback.pressedNotes.keys() ] );
+
+        let difference = this.currentCursorNotes.filter(x => ![ ...this.playback.pressedNotes.keys() ].includes(x));
+        if (difference.length === 0) {
+          const cursor = this.osmd.cursor;
+          cursor.next();
+          this.currentCursorNotes = this.getVoices(cursor).map(item => item.note);
+        }
+      });
+      document.addEventListener('noteOff', (event) => {
+        console.log([ ...this.playback.pressedNotes.keys() ] );
+      });
+
+      const cursor = this.osmd.cursor;
+      cursor.show();
+      cursor.reset();
+
+      let tutorialNotes = this.allNotes;
+      console.log(tutorialNotes);
+
+
+      this.currentCursorNotes = this.getVoices(cursor).map(item => item.note);
+      console.log(this.currentCursorNotes);
+    }
+  }
+
+  getCursorNotes() {
+
+  }
+
+  playScore() {
+    console.log('PLAY SHEET');
+    if (this.osmd) {
+      const cursor = this.osmd.cursor;
+      cursor.show();
+      cursor.reset();    
+
+      this.playTimeline();
+      this.playAllNotes();
+    }
+  }
+  
+  stopScore() {
+    if (this.osmd) {
+    }
+  }
+
+  pauseScore() {
+    if (this.osmd) {
+    }
   }
 
   handleFileSelect(evt) {
@@ -45,7 +118,8 @@ export default class OSMDHandler {
               () => {
                 this.osmd = osmd; // give access to osmd object in Browser console, e.g. for osmd.setOptions()
                 this.osmd.render();
-                this.playMusicSheet();        
+                // this.playMusicSheet();      
+                this.proccessScore();
               }
             );
       };
@@ -56,17 +130,23 @@ export default class OSMDHandler {
         reader.readAsText(file);
       }
     }
-  }    
+  }
+
+  proccessScore() {
+    this.allNotes = [];
+    this.allNotes = this.getAllNotes();
+    console.log('score notes', this.allNotes);
+  }
   
   playMusicSheet() {
-    this.allNotes = [];
     const cursor = this.osmd.cursor;
     cursor.show();
-    cursor.reset();
-    
-    this.getAllNotes();
-    this.playTimeline();
-    this.playAllNotes();
+    cursor.reset();    
+
+    setTimeout(() => {
+      this.playTimeline();
+      this.playAllNotes();  
+    });
   }
 
   playAllNotes() {
@@ -100,13 +180,22 @@ export default class OSMDHandler {
   }
 
   getAllNotes() {
-    while(!this.osmd.cursor.iterator.endReached) {
-      this.getVoices(this.osmd.cursor);
+    let notes;
+    notes = [];
+
+    while (!this.osmd.cursor.iterator.endReached) {
+      let voiceNotes;
+      voiceNotes = [];
+      voiceNotes = this.getVoices(this.osmd.cursor);
+      notes.push(...voiceNotes);
       this.osmd.cursor.iterator.moveToNext();
     }
+    return notes;
   }
 
   getVoices(cursor) {
+    let voicesNotes;
+    voicesNotes = [];
     const voices = this.osmd.cursor.iterator.CurrentVoiceEntries;
     for (var i = 0; i < voices.length; i++) {
       const v = voices[i];
@@ -118,14 +207,21 @@ export default class OSMDHandler {
         if ((note != null) && (note.halfTone != 0)) {
             const currentNote = note.halfTone + 12;  // see issue #224
             const currentTime = cursor.iterator.currentTimeStamp.realValue * 4 * 60 / bpm;
-            
+            voicesNotes.push({
+              "note": currentNote,
+              "startTime": currentTime,
+              "duration": note.length.realValue
+            })
+            /*
             this.allNotes.push({
               "note": currentNote,
               "startTime": currentTime,
               "duration": note.length.realValue
             })
+            */
         }
       }
     }
+    return voicesNotes;
   }
 }
