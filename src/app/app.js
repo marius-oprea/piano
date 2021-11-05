@@ -1,4 +1,4 @@
-import "./style.scss";
+import "../style.scss";
 
 import Midi from './midi.js'
 import SVG from './svg.js';
@@ -7,13 +7,18 @@ import Playback from './playback.js';
 import Keyboard from './keyboard.js';
 import OSMDHandler from './osmd-handler.js';
 
-export default class App {
+export default class App extends HTMLElement {
   midi;
   osmdHandler;
   isMidiPlayback;
   showTutorKeys;
 
   constructor() {
+    super();
+
+    // Create a shadow root
+    const shadow = this.attachShadow({mode: 'open'});
+
     const svg = new SVG();
     // const file = new File();
     this.midi = new Midi();
@@ -26,6 +31,13 @@ export default class App {
     // file.downloadFile('fileDownload');
 
     this.init();
+
+    // Attach the created elements to the shadow dom
+    // shadow.appendChild(style);
+    // console.log(style.isConnected);
+    // shadow.appendChild(wrapper);
+    // wrapper.appendChild(icon);
+    // wrapper.appendChild(info);    
   }
 
   init() {
@@ -81,3 +93,6 @@ export default class App {
     });    
   }  
 }
+
+// Define the new element
+customElements.define('app-root', App);

@@ -1,4 +1,4 @@
-import { OpenSheetMusicDisplay } from "opensheetmusicdisplay";
+// import { OpenSheetMusicDisplay } from "opensheetmusicdisplay";
 
 export default class OSMDHandler {
   osmd;
@@ -16,6 +16,7 @@ export default class OSMDHandler {
   showTutorKeys;
 
   constructor() {
+    /*
     this.isTutorRunning = false;
     document.getElementById('startTutorId').addEventListener('click', () => {this.startTutor()});
     document.getElementById('stopTutorId').addEventListener('click', () => {this.stopTutor()});
@@ -24,6 +25,7 @@ export default class OSMDHandler {
     document.getElementById('pauseSheetId').addEventListener('click', (event) => {this.pauseScore()});
     document.getElementById("files").addEventListener("change", (event) => {this.handleFileSelect(event)}, false);
     this.allNotes = [];
+    */
   }
 
   stopTutor() {

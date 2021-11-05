@@ -6,3 +6,4 @@
 
 - implement webpack
 - use lazy loading for Opensheetmusicdisplay library
+- use RXJS
