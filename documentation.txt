@@ -1,6 +1,11 @@
 RUNs @ http://localhost:81/ via IIS
 https://marius-oprea.github.io/piano/
 
+npm install -g sass
+
+sass source/stylesheets/index.scss build/stylesheets/index.css
+
+
 
 BPM calculator
 ==============

@@ -1,3 +1,5 @@
+import { OpenSheetMusicDisplay } from "opensheetmusicdisplay";
+
 export default class OSMDHandler {
   osmd;
   playback;
@@ -10,6 +12,8 @@ export default class OSMDHandler {
   pauseButtonId;
   isTutorRunning;
   currentCursorNotes;
+  keyboard;
+  showTutorKeys;
 
   constructor() {
     this.isTutorRunning = false;
@@ -37,8 +41,31 @@ export default class OSMDHandler {
         if (difference.length === 0) {
           const cursor = this.osmd.cursor;
           do {
-            cursor.next();
-            this.currentCursorNotes = this.getVoices(cursor).map(item => item.note);
+            if (this.showTutorKeys) {
+              this.currentCursorNotes.forEach(note => {
+                this.keyboard.keys[note].element.classList.remove("tutor-pressed");
+              });
+            }
+      
+            if (!cursor.iterator.endReached) {
+              cursor.next();
+              const currentVoices = this.getVoices(cursor);
+              if (currentVoices !== undefined) {
+                this.currentCursorNotes = currentVoices.map(item => item.note);
+
+                if (this.showTutorKeys) {
+                  this.currentCursorNotes.forEach(note => {
+                    this.keyboard.keys[note].element.classList.add("tutor-pressed");
+                  });
+                }
+              } else {
+                // alert('THE END');
+                break;
+              }
+            } else {
+              alert('THE END');
+              break;
+            }
           }
           while(this.currentCursorNotes.length === 0);
           console.log('------------------------------------------');
@@ -56,14 +83,17 @@ export default class OSMDHandler {
       let tutorialNotes = this.allNotes;
       console.log(tutorialNotes);
 
-
       this.currentCursorNotes = this.getVoices(cursor).map(item => item.note);
       console.log(this.currentCursorNotes);
+      if (this.showTutorKeys) {
+        this.currentCursorNotes.forEach(note => {
+          this.keyboard.keys[note].element.classList.add("tutor-pressed");
+        });
+      }
     }
   }
 
   getCursorNotes() {
-
   }
 
   playScore() {
@@ -111,7 +141,7 @@ export default class OSMDHandler {
       var reader = new FileReader();
   
       reader.onload = (e) => {
-          var osmd = new opensheetmusicdisplay.OpenSheetMusicDisplay("osmdCanvas", {
+          var osmd = new OpenSheetMusicDisplay("osmdCanvas", {
             // set options here
             backend: "svg",
             drawFromMeasureNumber: 1,

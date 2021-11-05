@@ -8,7 +8,6 @@ body {
 }
 
 .sheet-player {
-  border: 1px solid red;
 }
 
 .container {
@@ -96,6 +95,17 @@ body {
   cursor: pointer;
 }
 
+.white-key.tutor-pressed {
+  border-top: 1px solid hsl(0, 0%, 47%);
+  border-left: 1px solid hsl(0, 0%, 60%);
+  border-bottom: 1px solid hsl(0, 0%, 60%);
+  box-shadow: 2px 0 3px var(--black-10) inset,
+    -5px 5px 20px var(--black-20) inset, 0 0 3px var(--black-20);
+  background: linear-gradient(to bottom, rgb(55, 0, 255) 0%, hsl(0, 0%, 91%) 100%);
+  outline: none;
+  cursor: pointer;
+}
+
 .white-2-white-key.pressed {
   border-top: 1px solid hsl(0, 0%, 47%);
   border-left: 1px solid hsl(0, 0%, 60%);
@@ -107,12 +117,35 @@ body {
   cursor: pointer;
 }
 
+.white-2-white-key.tutor-pressed {
+  border-top: 1px solid hsl(0, 0%, 47%);
+  border-left: 1px solid hsl(0, 0%, 60%);
+  border-bottom: 1px solid hsl(0, 0%, 60%);
+  box-shadow: 2px 0 3px var(--black-10) inset,
+    -5px 5px 20px var(--black-20) inset, 0 0 3px var(--black-20);
+  background: linear-gradient(to bottom, rgb(55, 0, 255) 0%, hsl(0, 0%, 91%) 100%);
+  outline: none;
+  cursor: pointer;
+}
+
 .black-key.pressed {
   box-shadow: -1px -1px 2px var(--white-20) inset,
     0 -2px 2px 3px var(--black-60) inset, 0 1px 2px var(--black-50);
   background: linear-gradient(
     to right,
     hsl(130, 100%, 50%) 10%,
+    hsl(0, 0%, 13%) 100%
+  );
+  outline: none;
+  cursor: pointer;
+}
+
+.black-key.tutor-pressed {
+  box-shadow: -1px -1px 2px var(--white-20) inset,
+    0 -2px 2px 3px var(--black-60) inset, 0 1px 2px var(--black-50);
+  background: linear-gradient(
+    to right,
+    hsl(231, 100%, 50%) 10%,
     hsl(0, 0%, 13%) 100%
   );
   outline: none;

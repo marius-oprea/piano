@@ -1,0 +1,8 @@
+- redo osmd-habdler plaback method and timeline ( timeline consider rests as notes and spend time on them resulting in delays
+  comparing with the notes played along )
+
+- research reactive UI with vanilla js
+- research splitting the UI into custom elements
+
+- implement webpack
+- use lazy loading for Opensheetmusicdisplay library

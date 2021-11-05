@@ -1,14 +1,17 @@
-import Midi from './src/midi.js'
-import SVG from './src/svg.js';
-import File from './src/file.js'
-import Playback from './src/playback.js';
-import Keyboard from './src/keyboard.js';
-import OSMDHandler from './src/osmd-handler.js';
+import "./style.scss";
 
-class App {
+import Midi from './midi.js'
+import SVG from './svg.js';
+import File from './file.js'
+import Playback from './playback.js';
+import Keyboard from './keyboard.js';
+import OSMDHandler from './osmd-handler.js';
+
+export default class App {
   midi;
   osmdHandler;
   isMidiPlayback;
+  showTutorKeys;
 
   constructor() {
     const svg = new SVG();
@@ -39,6 +42,7 @@ class App {
     playback.initSynthesizer();
     this.midi.setPlaybackInstance(playback);
     this.osmdHandler.playback = playback;
+    this.osmdHandler.keyboard = keyboard;
 
     for (const [key, { element }] of Object.entries(keyboard.getKeys())) {
       if (element !== undefined) {
@@ -63,14 +67,17 @@ class App {
     });
 
     document.getElementById('isMidiId').addEventListener('change', (event) => {
-      console.log(event.target.checked);
       this.isMidiPlayback = event.target.checked;
       if (this.midi) {
         this.midi.isPlaybackSound = this.isMidiPlayback;
       }
     });
 
+    document.getElementById('showTutorKeysId').addEventListener('change', (event) => {
+      this.showTutorKeys = event.target.checked;
+      if (this.showTutorKeys) {
+        this.osmdHandler.showTutorKeys = this.showTutorKeys;
+      }
+    });    
   }  
 }
-
-const app = new App();

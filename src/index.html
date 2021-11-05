@@ -1,6 +1,5 @@
 <html>
 	<head>
-		<link href="index.css" rel="stylesheet">
 	</head>
 	<body>
 		<div class="container">
@@ -12,6 +11,7 @@
 				<span class="spacer"></span>
 				<button id="startTutorId"> START TUTOR</button>
 				<button id="stopTutorId"> STOP TUTOR</button>
+				<input type="checkbox" value="showTutorKeys" id="showTutorKeysId"> Show correct keys
 				<output id="list"></output>
 			</div>	
 			<div id="osmdCanvas"></div>
@@ -142,7 +142,6 @@
 					
 			</div>
 		</div>
-		<script src="src/opensheetmusicdisplay.min.js"></script>	
-		<script type="module" src="app.js"></script>
+		<script src="bundle.js"></script>
 	</body>
 </html>
