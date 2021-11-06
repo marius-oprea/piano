@@ -1,3 +1,1 @@
-import App from './app/app.js';
-
-const app = new App();
+import('./app/app.module.js').then(m => new m.AppModule());
