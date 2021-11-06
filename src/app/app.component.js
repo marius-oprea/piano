@@ -1,4 +1,4 @@
-import * as MyStyle from './app.component.scss';
+import styles from './app.component.scss';
 import * as MyTemplate from './app.component.html';
 
 export class AppComponent extends HTMLElement {
@@ -9,14 +9,17 @@ export class AppComponent extends HTMLElement {
     const shadowRoot = this.attachShadow({mode: 'open'});
 
     const t = MyTemplate;
-    const s = MyStyle;
 
-    console.log(s.default);
-    console.log(t.default);
-    let template = document.createElement('div');
+    const style = document.createElement('style');
+
+    console.log(styles);
+    style.textContent = styles;
+
+    const template = document.createElement('div');
     template.innerHTML = t.default;
-    template.style = s.default;
-    shadowRoot.append(template);
+    template.style.textContent = style;
+    shadowRoot.appendChild(template);
+    shadowRoot.appendChild(style);
   }
 }
 customElements.define('app-root', AppComponent);
